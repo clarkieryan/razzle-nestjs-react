@@ -5,6 +5,8 @@ import './Home.css';
 
 class Home extends React.Component {
   render() {
+  console.log(logo);
+
     return (
       <div className="Home">
         <div className="Home-header">

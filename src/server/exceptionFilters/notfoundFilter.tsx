@@ -1,19 +1,26 @@
-import { Get, Controller, Response, Request } from "@nestjs/common";
-import { AppService } from "./app.service";
+import { ExceptionFilter, Catch, NotFoundException, ArgumentsHost } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
 
-import App from "../app/App";
+import App from "../../app/App";
 import * as React from "react";
 import { StaticRouter } from "react-router-dom";
 import { renderToString } from "react-dom/server";
 
-const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
+let assets;
+const syncLoadAssets = () => {
+  assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
+};
+syncLoadAssets();
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(@Request() req: any, @Response() res: any) {
+@Catch(NotFoundException)
+export class NotFoundExceptionFilter implements ExceptionFilter {
+  catch(exception: HttpException, host: ArgumentsHost) {
+
+    const ctx = host.switchToHttp();
+    const res = ctx.getResponse();
+    const req = ctx.getRequest();
+
     const context = {} as any;
     const markup = renderToString(
       <StaticRouter context={context} location={req.url}>
