@@ -1,7 +1,7 @@
 import { Get, Controller, Response, Request } from "@nestjs/common";
 import { AppService } from "./app.service";
 
-import App from "../App";
+import App from "../app/App";
 import * as React from "react";
 import { StaticRouter } from "react-router-dom";
 import { renderToString } from "react-dom/server";
@@ -13,10 +13,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(
-    @Request() req: any,
-    @Response() res: any
-  ) {
+  getHello(@Request() req: any, @Response() res: any) {
     const context = {} as any;
     const markup = renderToString(
       <StaticRouter context={context} location={req.url}>
@@ -27,7 +24,7 @@ export class AppController {
     if (context.url) {
       res.redirect(context.url);
     } else {
-    res.send(`
+      res.send(`
   <!doctype html>
     <html lang="">
     <head>
@@ -49,7 +46,7 @@ export class AppController {
     <body>
         <div id="root">${markup}</div>
     </body>
-  </html>`)
+  </html>`);
     }
   }
 }
