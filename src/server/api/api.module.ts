@@ -3,6 +3,6 @@ import { ApiController } from './api.controller';
 
 @Module({
   imports: [],
-  controllers: [ApiController]
+  controllers: [ApiController],
 })
 export class ApiModule {}

@@ -16,7 +16,13 @@
     "allowJs": true,
     "jsx": "react",
     "lib": ["es6", "es2015", "es2017", "dom"],
+    "typeRoots" : ["node_modules/@types", "./typings"],
+    "paths": {
+      "@helpers": ["src/app/helpers"],
+      "@components": ["src/app/components"]
+    }
   },
-  "include": ["src/**/*"],
+  
+  "include": ["src/**/*", "./typings/**/*.d.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

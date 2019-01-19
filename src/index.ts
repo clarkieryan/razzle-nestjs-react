@@ -9,7 +9,7 @@ async function bootstrap() {
     index: false,
     redirect: false,
     });
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 
   if ((module as any).hot) {
     (module as any).hot.accept();
